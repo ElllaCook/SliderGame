@@ -46,6 +46,9 @@ const characters = {
 
 characters.ella.src = "assets/ella.png";
 
+const gameOverImage = new Image();
+gameOverImage.src = 'assets/gameOver.png';
+
 // represent player as an object so it is able to be manipulated
 const player = {
     image: playerImg,
@@ -86,15 +89,22 @@ function gameLoop() {
 
     // IF LOST
     if (gameOver) {
-        ctx.fillStyle = 'red';
-        ctx.font = '40px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const scale = .5;
+    ctx.drawImage(
+        gameOverImage,
+        (canvas.width - gameOverImage.width * scale) / 2, // center X
+        50,                                              // Y position
+        gameOverImage.width * scale,                      // scaled width
+        gameOverImage.height * scale                      // scaled height
+    );
     // show final score
         ctx.font = '20px Arial';
         ctx.textAlign = 'center';  
-    ctx.fillText(`Score: ${score}`,canvas.width / 2, canvas.height / 3.4);
-    ctx.fillText(`High Score: ${highScore}`,canvas.width / 2, canvas.height / 3);  
+    ctx.fillText(`Score: ${score}`,canvas.width / 2, canvas.height / 2.05);
+    ctx.fillText(`High Score: ${highScore}`,canvas.width / 2, canvas.height / 1.9);  
     showRestart();
     
     // show restart button in HTML
