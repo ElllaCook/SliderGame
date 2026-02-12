@@ -31,10 +31,13 @@ playerImg.src = "assets/ella.png";
 // background image
 const backgroundImage = new Image();
 backgroundImage.src = "assets/background.png";
+// backgroundImage.onload = () => {
+//     startGame(); // only start once background is loaded
+// };
 backgroundImage.onload = () => {
-    startGame(); // only start once background is loaded
+  document.getElementById("characterSelect").style.display = "flex";
 };
-// playerImg.onload = () => {
+// // playerImg.onload = () => {
 //   ctx.drawImage(playerImg, 50, 50, 100, 100);
 // };
 
@@ -45,6 +48,16 @@ const characters = {
 }
 
 characters.ella.src = "assets/ella.png";
+characters.josh.src = "assets/joshy.png";
+
+let selectedCharacter = null 
+
+// CAR OBSTACLE
+const obstacleImg = new Image();
+obstacleImg.src = "assets/patrol.png";
+
+
+
 
 const gameOverImage = new Image();
 gameOverImage.src = 'assets/gameOver.png';
@@ -65,9 +78,9 @@ let obstacles = [];
 function createObstacle() {
     return {
         x: canvas.width, // start off screen to the right
-        y: groundY - player.height, // global var
-        width: 30,
-        height: 50,
+        y: groundY - 50, // same height as player, or adjust
+        width: 50,       // match the obstacle image width
+        height: 50,      // match the obstacle image height
         speed: 6
     };
 }
@@ -129,8 +142,8 @@ function gameLoop() {
     // move and draw OBSTACLES
     obstacles.forEach(obs => {
         obs.x -= obs.speed; //move left
-        ctx.fillStyle = 'green'; // temp design for obstacle
-        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+        ctx.drawImage(obstacleImg, obs.x, obs.y, obs.width, obs.height);
+
     });
 
     // get rid of obs off screen
@@ -212,3 +225,19 @@ function startGame() {
 
 // // START THE GAME
 // startGame();
+
+document.getElementById("pickElla").addEventListener("click", () => {
+  selectedCharacter = "ella";
+  player.image = characters.ella;
+
+  document.getElementById("characterSelect").style.display = "none";
+  startGame();
+});
+
+document.getElementById("pickJosh").addEventListener("click", () => {
+  selectedCharacter = "josh";
+  player.image = characters.josh;
+
+  document.getElementById("characterSelect").style.display = "none";
+  startGame();
+});
