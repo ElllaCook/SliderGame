@@ -12,6 +12,11 @@ const groundY = canvas.height - 50; // 550
 // win/lose flag
 let gameOver = false;
 
+// score trackers
+let score = 0; // time survived in seconds
+let startTime = null;  
+let highScore = localStorage.getItem('highScore') || 0;
+
 // standardised playerImg for testing
 const playerImg = new Image();
 playerImg.src = "assets/ella.png";
@@ -51,11 +56,31 @@ function createObstacle() {
     };
 }
 
-
+startTime = Date.now(); // milliseconds
 // GAME LOOP
 function gameLoop() {
     // clear previous frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // score updating
+    if (!gameOver) {
+    const now = Date.now();
+    score = Math.floor((now - startTime) / 1000); // convert to seconds
+    }
+
+    // IF LOST
+    if (gameOver) {
+        ctx.fillStyle = 'red';
+        ctx.font = '40px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+    // show final score
+        ctx.font = '20px Arial';
+        ctx.textAlign = 'center';  
+    ctx.fillText(`Score: ${score}`,canvas.width / 2, canvas.height / 3.4);
+    ctx.fillText(`High Score: ${highScore}`,canvas.width / 2, canvas.height / 3);        
+    return;
+    }
 
     // gravity
     player.velocityY += 0.5;
@@ -85,12 +110,22 @@ function gameLoop() {
         obstacles.push(createObstacle());
     }
 
-    // // COLLISION MECHANICS
-    // obstacles.forEach(obs => {
-    //     if (
-    //         player.x < obs.x + obs.width &&
-    //     )
-    // });
+    // COLLISION MECHANICS
+    obstacles.forEach(obs => {
+        if (
+            player.x < obs.x + obs.width &&
+            player.x + player.width > obs.x &&
+            player.y < obs.y + obs.height &&
+            player.y + player.height > obs.y
+        ) {
+            gameOver = true;
+        }
+        // HIGH SCORE TRACKER
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('highScore', highScore); // save it
+    }
+    });
 
     // repeat
     requestAnimationFrame(gameLoop)
