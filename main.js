@@ -30,7 +30,7 @@ playerImg.src = "assets/ella.png";
 
 // background image
 const backgroundImage = new Image();
-backgroundImage.src = "assets/background.avif";
+backgroundImage.src = "assets/background.png";
 
 // playerImg.onload = () => {
 //   ctx.drawImage(playerImg, 50, 50, 100, 100);
