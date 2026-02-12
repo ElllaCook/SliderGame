@@ -3,8 +3,15 @@ const canvas = document.getElementById('canvas');
 // Get the 2D rendering context
 const ctx = canvas.getContext('2d');
 
-canvas.width = 400;
-canvas.height = 600;
+// native rendering 
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas); // update canvas if window resizes
+resizeCanvas(); 
+
 
 // ground when taking into account player height 
 const groundY = canvas.height - 50; // 550
@@ -20,6 +27,10 @@ let highScore = localStorage.getItem('highScore') || 0;
 // standardised playerImg for testing
 const playerImg = new Image();
 playerImg.src = "assets/ella.png";
+
+// background image
+const backgroundImage = new Image();
+backgroundImage.src = "assets/background.avif";
 
 // playerImg.onload = () => {
 //   ctx.drawImage(playerImg, 50, 50, 100, 100);
@@ -49,7 +60,7 @@ let obstacles = [];
 function createObstacle() {
     return {
         x: canvas.width, // start off screen to the right
-        y: 500, // global var
+        y: groundY - player.height, // global var
         width: 30,
         height: 50,
         speed: 6
@@ -62,6 +73,7 @@ startTime = Date.now(); // milliseconds
 function gameLoop() {
     // clear previous frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
     // score updating
     if (!gameOver) {
