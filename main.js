@@ -57,6 +57,7 @@ function createObstacle() {
 }
 
 startTime = Date.now(); // milliseconds
+
 // GAME LOOP
 function gameLoop() {
     // clear previous frame
@@ -78,7 +79,11 @@ function gameLoop() {
         ctx.font = '20px Arial';
         ctx.textAlign = 'center';  
     ctx.fillText(`Score: ${score}`,canvas.width / 2, canvas.height / 3.4);
-    ctx.fillText(`High Score: ${highScore}`,canvas.width / 2, canvas.height / 3);        
+    ctx.fillText(`High Score: ${highScore}`,canvas.width / 2, canvas.height / 3);  
+    
+    
+    // show restart button in HTML
+    document.getElementById('restartButton').style.display = 'block';
     return;
     }
 
@@ -131,7 +136,9 @@ function gameLoop() {
     requestAnimationFrame(gameLoop)
 }
 
-// JUMP MECHANICS
+// ALL USER INPUT MECHANICS 
+// TAP TO JUMP + BUTTON CLICKING
+
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space' && player.y + player.height >= groundY) {
         player.velocityY = -10;
@@ -144,6 +151,30 @@ document.addEventListener('click', (e) => {
         }
     });
 
+document.getElementById('restartButton').addEventListener('click', startGame);
+
+
+// START GAME FUNCTION
+function startGame() {
+    document.getElementById('restartButton').style.display = 'none';
+    // reset player
+    player.x = 50;
+    player.y = 50;
+    player.velocityY = 0;
+
+    // reset obstacles
+    obstacles = [];    
+
+    // reset timer
+    startTime = Date.now();
+    score = 0;
+
+    // reset gameOver flag
+    gameOver = false;
+
+    // start game
+    gameLoop();
+}
 
 // START THE GAME
-gameLoop();
+startGame();
