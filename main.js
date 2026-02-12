@@ -85,12 +85,12 @@ function gameLoop() {
         obstacles.push(createObstacle());
     }
 
-    // COLLISION MECHANICS
-    obstacles.forEach(obs => {
-        if (
-            player.x < obs.x + obs.width &&
-        )
-    });
+    // // COLLISION MECHANICS
+    // obstacles.forEach(obs => {
+    //     if (
+    //         player.x < obs.x + obs.width &&
+    //     )
+    // });
 
     // repeat
     requestAnimationFrame(gameLoop)
