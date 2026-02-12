@@ -31,7 +31,9 @@ playerImg.src = "assets/ella.png";
 // background image
 const backgroundImage = new Image();
 backgroundImage.src = "assets/background.png";
-
+backgroundImage.onload = () => {
+    startGame(); // only start once background is loaded
+};
 // playerImg.onload = () => {
 //   ctx.drawImage(playerImg, 50, 50, 100, 100);
 // };
@@ -198,5 +200,5 @@ function startGame() {
     gameLoop();
 }
 
-// START THE GAME
-startGame();
+// // START THE GAME
+// startGame();
