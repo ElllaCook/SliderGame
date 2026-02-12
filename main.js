@@ -146,6 +146,8 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('restartButton') // get the button
+) return; // don’t trigger jump when clicking button
         if (player.y + player.height >= groundY) {
             player.velocityY = -10;
         }
