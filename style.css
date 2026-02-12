@@ -1,0 +1,27 @@
+/* Canvas styling */
+canvas {
+    border: 1px solid #000;
+    display: block;
+    margin: 0 auto;
+    background: #eee;
+}
+
+/* Button styling */
+#restartButton {
+    position: absolute;      /* put it above the canvas */
+    z-index: 10;             /* higher than canvas */
+    top: 65%;                /* vertical center */
+    left: 50%;               /* horizontal center */
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    padding: 15px 40px;
+    opacity: 0;              /* hidden initially */
+    pointer-events: none;    /* ignore clicks when hidden */
+    transition: opacity 0.2s ease;
+}
+
+/* Show the button */
+#restartButton.show {
+    opacity: 1;
+    pointer-events: auto;
+}

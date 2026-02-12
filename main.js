@@ -67,6 +67,7 @@ function gameLoop() {
     if (!gameOver) {
     const now = Date.now();
     score = Math.floor((now - startTime) / 1000); // convert to seconds
+    hideRestart(); 
     }
 
     // IF LOST
@@ -80,7 +81,7 @@ function gameLoop() {
         ctx.textAlign = 'center';  
     ctx.fillText(`Score: ${score}`,canvas.width / 2, canvas.height / 3.4);
     ctx.fillText(`High Score: ${highScore}`,canvas.width / 2, canvas.height / 3);  
-    
+    showRestart();
     
     // show restart button in HTML
     document.getElementById('restartButton').style.display = 'block';
@@ -154,8 +155,15 @@ document.addEventListener('click', (e) => {
     });
 
 document.getElementById('restartButton').addEventListener('click', startGame);
+document.getElementById('restartButton').addEventListener('touchend', startGame);
 
-
+// IOS BUTTON BS
+function showRestart() {
+    document.getElementById('restartButton').classList.add('show'); // button becomes visible
+}
+function hideRestart() {
+    document.getElementById('restartButton').classList.remove('show'); // button hidden again
+}
 // START GAME FUNCTION
 function startGame() {
     document.getElementById('restartButton').style.display = 'none';
